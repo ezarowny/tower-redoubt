@@ -34,13 +34,13 @@ var drawBoundary = function(canvas) {
 
 var drawGrid = function(canvas) {
     var context = canvas.getContext('2d');
-    for (var x = ARENA_LEFT + 0.5; x < ARENA_WIDTH; x += BOX_SIZE) {
+    for (var x = ARENA_LEFT + 0.5; x < ARENA_RIGHT; x += BOX_SIZE) {
         context.moveTo(x, ARENA_TOP);
-        context.lineTo(x, ARENA_HEIGHT);
+        context.lineTo(x, ARENA_BOTTOM);
     }
-    for (var y = ARENA_TOP + 0.5; y < ARENA_HEIGHT; y += BOX_SIZE) {
+    for (var y = ARENA_TOP + 0.5; y < ARENA_BOTTOM; y += BOX_SIZE) {
         context.moveTo(ARENA_LEFT, y);
-        context.lineTo(ARENA_WIDTH, y);
+        context.lineTo(ARENA_RIGHT, y);
     }
     context.strokeStyle = "#eee";
     context.stroke();
