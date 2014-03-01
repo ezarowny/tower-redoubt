@@ -56,6 +56,8 @@ var onClick = function(event) {
     var canvas = event.target;
     var context = canvas.getContext('2d');
     context.fillRect(position[0], position[1], BOX_SIZE, BOX_SIZE);
+    TOWERS.push(getGridLocation(position[0], position[1]));
+    console.log(TOWERS);
 };
 
 var onMousemove = function(e) {
@@ -94,9 +96,25 @@ var drawBoxAtMouse = function() {
     context.fillRect(boxLeft, boxTop, BOX_SIZE, BOX_SIZE);
 };
 
+var getGridLocation = function(x, y) {
+    var boxLeft = x - (x - ARENA_LEFT) % BOX_SIZE;
+    var boxTop = y - (y - ARENA_TOP) % BOX_SIZE;
+    return [boxLeft, boxTop];
+};
+
+var drawTowers = function(towers) {
+    var canvas = document.getElementById('main');
+    var context = canvas.getContext('2d');
+    for (var i=0; i<towers.length; i++) {
+        var tower = towers[i];
+        context.fillRect(tower[0], tower[1], BOX_SIZE, BOX_SIZE);
+    }
+};
+
 var drawGame = function() {
     clearCanvas();
     drawBase();
+    drawTowers(TOWERS);
     drawBoxAtMouse();
 };
 
