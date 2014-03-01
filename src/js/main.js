@@ -5,7 +5,8 @@ var BOX_SIZE = 30,
     ARENA_LEFT = 80,
     ARENA_RIGHT = ARENA_LEFT + ARENA_WIDTH,
     ARENA_BOTTOM = ARENA_TOP + ARENA_HEIGHT,
-    TIME_INTERVAL = 1000 / 30;
+    TIME_INTERVAL = 1000 / 30,
+    KEEP_RUNNING = false;
 
 var getCursorPosition = function(e) {
     var x, y;
@@ -75,9 +76,22 @@ var gameLoop = function() {
 
 var recursiveAnimation = function() {
     gameLoop();
+    if (KEEP_RUNNING) {
+        window.requestAnimationFrame(recursiveAnimation);
+    }
+};
+
+var stopLoop = function() {
+    KEEP_RUNNING = false;
+};
+
+var startLoop = function() {
+    KEEP_RUNNING = true;
     window.requestAnimationFrame(recursiveAnimation);
 };
 
 (function(document) {
-    window.requestAnimationFrame(recursiveAnimation);
+    document.getElementById('stop').addEventListener('click', stopLoop);
+    document.getElementById('start').addEventListener('click', startLoop);
+    startLoop();
 })(document);
