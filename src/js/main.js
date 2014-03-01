@@ -86,8 +86,10 @@ var stopLoop = function() {
 };
 
 var startLoop = function() {
-    KEEP_RUNNING = true;
-    window.requestAnimationFrame(recursiveAnimation);
+    if (!KEEP_RUNNING) {
+        KEEP_RUNNING = true;
+        window.requestAnimationFrame(recursiveAnimation);
+    }
 };
 
 (function(document) {
