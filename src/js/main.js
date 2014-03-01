@@ -20,9 +20,24 @@ function getCursorPosition(e) {
     return [x, y];
 }
 
+function draw_boundary() {
+    var main = document.getElementById("main");
+    var context = main.getContext("2d");
+    context.moveTo(80, 80);
+    context.lineTo(560, 80);
+    context.lineTo(560, 400);
+    context.lineTo(80, 400);
+    context.lineTo(80, 80);
+    context.stroke();
+}
+
 var onClick = function(event) {
-    cell = getCursorPosition(event);
-    console.log(cell);
+    var position = getCursorPosition(event);
+    var main = document.getElementById("main");
+    var context = main.getContext("2d");
+    context.fillRect(position[0], position[1], 20, 20);
+    console.log(position);
 }
 
 main.addEventListener("click", onClick, false);
+draw_boundary();
