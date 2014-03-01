@@ -7,8 +7,9 @@ var BOX_SIZE = 30,
     ARENA_BOTTOM = ARENA_TOP + ARENA_HEIGHT,
     TIME_INTERVAL = 1000 / 30,
     KEEP_RUNNING = false,
-    MOUSE_X = 0,
-    MOUSE_Y = 0;
+    MOUSE_X = null,
+    MOUSE_Y = null,
+    TOWERS = [];
 
 var getCursorPosition = function(e) {
     var x, y;
@@ -58,6 +59,12 @@ var onClick = function(event) {
     console.log(position);
 };
 
+var onMousemove = function(e) {
+    var pos = getCursorPosition(e);
+    MOUSE_X = pos[0];
+    MOUSE_Y = pos[1];
+};
+
 var drawBase = function() {
     var canvas = document.getElementById('main');
     canvas.addEventListener('click', onClick, false);
@@ -71,6 +78,9 @@ var clearCanvas = function() {
 };
 
 var drawBoxAtMouse = function() {
+    if (MOUSE_X === null || MOUSE_Y === null) {
+        return;
+    }
     var canvas = document.getElementById('main');
     var context = canvas.getContext('2d');
     context.fillRect(MOUSE_X, MOUSE_Y, BOX_SIZE, BOX_SIZE);
@@ -85,7 +95,6 @@ var drawGame = function() {
 var gameLoop = function() {
     //updateState();
     drawGame();
-    console.log((new Date()).getTime());
 };
 
 var recursiveAnimation = function() {
@@ -109,10 +118,6 @@ var startLoop = function() {
 (function(document) {
     document.getElementById('stop').addEventListener('click', stopLoop);
     document.getElementById('start').addEventListener('click', startLoop);
-    document.getElementById('main').addEventListener('mousemove', function(e) {
-        var pos = getCursorPosition(e);
-        MOUSE_X = pos[0];
-        MOUSE_Y = pos[1];
-    });
+    document.getElementById('main').addEventListener('mousemove', onMousemove);
     startLoop();
 })(document);
