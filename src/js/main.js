@@ -4,7 +4,8 @@ var BOX_SIZE = 30,
     ARENA_TOP = 60,
     ARENA_LEFT = 80,
     ARENA_RIGHT = ARENA_LEFT + ARENA_WIDTH,
-    ARENA_BOTTOM = ARENA_TOP + ARENA_HEIGHT;
+    ARENA_BOTTOM = ARENA_TOP + ARENA_HEIGHT,
+    TIME_INTERVAL = 1000 / 30;
 
 var getCursorPosition = function(e) {
     var x, y;
@@ -54,9 +55,29 @@ var onClick = function(event) {
     console.log(position);
 };
 
-(function(document) {
+var drawBase = function() {
     var canvas = document.getElementById('main');
     canvas.addEventListener('click', onClick, false);
     drawBoundary(canvas);
     drawGrid(canvas);
+};
+
+var drawGame = function() {
+    drawBase();
+    //drawEverythingElse();
+};
+
+var gameLoop = function() {
+    //updateState();
+    drawGame();
+    console.log((new Date()).getTime());
+};
+
+var recursiveAnimation = function() {
+    gameLoop();
+    window.requestAnimationFrame(recursiveAnimation);
+};
+
+(function(document) {
+    window.requestAnimationFrame(recursiveAnimation);
 })(document);
