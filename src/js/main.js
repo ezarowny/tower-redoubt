@@ -11,6 +11,14 @@ var BOX_SIZE = 30,
     MOUSE_Y = null,
     TOWERS = {};
 
+var getCanvas = function() {
+    return document.getElementById('main');
+};
+
+var getContext = function() {
+    return getCanvas().getContext('2d');
+};
+
 var getCursorPosition = function(e) {
     var x, y;
     if (e.pageX != undefined && e.pageY != undefined) {
@@ -70,14 +78,14 @@ var onMousemove = function(e) {
 };
 
 var drawBase = function() {
-    var canvas = document.getElementById('main');
+    var canvas = getCanvas();
     canvas.addEventListener('click', onClick, false);
     drawBoundary(canvas);
     drawGrid(canvas);
 };
 
 var clearCanvas = function() {
-    var canvas = document.getElementById('main');
+    var canvas = getCanvas();
     canvas.width = canvas.width;
 };
 
@@ -95,8 +103,7 @@ var drawBoxAtMouse = function() {
     if (!insideArena(MOUSE_X, MOUSE_Y)) {
         return;
     }
-    var canvas = document.getElementById('main');
-    var context = canvas.getContext('2d');
+    var context = getContext();
     var boxLeft = MOUSE_X - (MOUSE_X - ARENA_LEFT) % BOX_SIZE;
     var boxTop = MOUSE_Y - (MOUSE_Y - ARENA_TOP) % BOX_SIZE;
     context.fillRect(boxLeft, boxTop, BOX_SIZE, BOX_SIZE);
@@ -109,8 +116,7 @@ var getGridLocation = function(x, y) {
 };
 
 var drawTowers = function(towers) {
-    var canvas = document.getElementById('main');
-    var context = canvas.getContext('2d');
+    var context = getContext();
     for (towerStr in towers) {
         tower = towers[towerStr];
         context.fillRect(tower[0], tower[1], BOX_SIZE, BOX_SIZE);
