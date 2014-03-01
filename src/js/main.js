@@ -9,7 +9,7 @@ var BOX_SIZE = 30,
     KEEP_RUNNING = false,
     MOUSE_X = null,
     MOUSE_Y = null,
-    TOWERS = [];
+    TOWERS = {};
 
 var getCursorPosition = function(e) {
     var x, y;
@@ -56,8 +56,11 @@ var onClick = function(event) {
     var canvas = event.target;
     var context = canvas.getContext('2d');
     context.fillRect(position[0], position[1], BOX_SIZE, BOX_SIZE);
-    TOWERS.push(getGridLocation(position[0], position[1]));
-    console.log(TOWERS);
+
+    // FIXME: This is problematic. Replace with real tower objects
+    // someday.
+    var tower = getGridLocation(position[0], position[1]);
+    TOWERS[tower] = tower;
 };
 
 var onMousemove = function(e) {
@@ -79,7 +82,10 @@ var clearCanvas = function() {
 };
 
 var insideArena = function(x, y) {
-    return x >= ARENA_LEFT && x <= ARENA_RIGHT && y >= ARENA_TOP && y <= ARENA_BOTTOM;
+    return x >= ARENA_LEFT &&
+           x <= ARENA_RIGHT &&
+           y >= ARENA_TOP &&
+           y <= ARENA_BOTTOM;
 };
 
 var drawBoxAtMouse = function() {
@@ -105,8 +111,8 @@ var getGridLocation = function(x, y) {
 var drawTowers = function(towers) {
     var canvas = document.getElementById('main');
     var context = canvas.getContext('2d');
-    for (var i=0; i<towers.length; i++) {
-        var tower = towers[i];
+    for (towerStr in towers) {
+        tower = towers[towerStr];
         context.fillRect(tower[0], tower[1], BOX_SIZE, BOX_SIZE);
     }
 };
