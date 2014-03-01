@@ -83,7 +83,7 @@ var drawBoxAtMouse = function() {
     }
     var canvas = document.getElementById('main');
     var context = canvas.getContext('2d');
-    context.fillRect(MOUSE_X, MOUSE_Y, BOX_SIZE, BOX_SIZE);
+    context.fillRect(MOUSE_X - BOX_SIZE/2, MOUSE_Y - BOX_SIZE/2, BOX_SIZE, BOX_SIZE);
 };
 
 var drawGame = function() {
