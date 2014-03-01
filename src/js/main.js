@@ -1,8 +1,10 @@
 var BOX_SIZE = 30,
+    ARENA_WIDTH = 480,
+    ARENA_HEIGHT = 360,
     ARENA_TOP = 60,
     ARENA_LEFT = 80,
-    ARENA_WIDTH = 480,
-    ARENA_HEIGHT = 360;
+    ARENA_RIGHT = ARENA_LEFT + ARENA_WIDTH,
+    ARENA_BOTTOM = ARENA_TOP + ARENA_HEIGHT;
 
 var getCursorPosition = function(e) {
     var x, y;
