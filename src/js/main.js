@@ -56,7 +56,6 @@ var onClick = function(event) {
     var canvas = event.target;
     var context = canvas.getContext('2d');
     context.fillRect(position[0], position[1], BOX_SIZE, BOX_SIZE);
-    console.log(position);
 };
 
 var onMousemove = function(e) {
@@ -77,13 +76,22 @@ var clearCanvas = function() {
     canvas.width = canvas.width;
 };
 
+var insideArena = function(x, y) {
+    return x >= ARENA_LEFT && x <= ARENA_RIGHT && y >= ARENA_TOP && y <= ARENA_BOTTOM;
+};
+
 var drawBoxAtMouse = function() {
     if (MOUSE_X === null || MOUSE_Y === null) {
         return;
     }
+    if (!insideArena(MOUSE_X, MOUSE_Y)) {
+        return;
+    }
     var canvas = document.getElementById('main');
     var context = canvas.getContext('2d');
-    context.fillRect(MOUSE_X - BOX_SIZE/2, MOUSE_Y - BOX_SIZE/2, BOX_SIZE, BOX_SIZE);
+    var boxLeft = MOUSE_X - (MOUSE_X - ARENA_LEFT) % BOX_SIZE;
+    var boxTop = MOUSE_Y - (MOUSE_Y - ARENA_TOP) % BOX_SIZE;
+    context.fillRect(boxLeft, boxTop, BOX_SIZE, BOX_SIZE);
 };
 
 var drawGame = function() {
