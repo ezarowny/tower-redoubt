@@ -25,9 +25,9 @@ var getCursorPosition = function(e) {
 var drawBoundary = function(canvas) {
     var context = canvas.getContext('2d');
     context.moveTo(ARENA_LEFT, ARENA_TOP);
-    context.lineTo(ARENA_LEFT + ARENA_WIDTH, ARENA_TOP);
-    context.lineTo(ARENA_LEFT + ARENA_WIDTH, ARENA_TOP + ARENA_HEIGHT);
-    context.lineTo(ARENA_LEFT, ARENA_TOP + ARENA_HEIGHT);
+    context.lineTo(ARENA_RIGHT, ARENA_TOP);
+    context.lineTo(ARENA_RIGHT, ARENA_BOTTOM);
+    context.lineTo(ARENA_LEFT, ARENA_BOTTOM);
     context.lineTo(ARENA_LEFT, ARENA_TOP);
     context.stroke();
 };
