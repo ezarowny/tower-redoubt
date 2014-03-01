@@ -6,7 +6,9 @@ var BOX_SIZE = 30,
     ARENA_RIGHT = ARENA_LEFT + ARENA_WIDTH,
     ARENA_BOTTOM = ARENA_TOP + ARENA_HEIGHT,
     TIME_INTERVAL = 1000 / 30,
-    KEEP_RUNNING = false;
+    KEEP_RUNNING = false,
+    MOUSE_X = 0,
+    MOUSE_Y = 0;
 
 var getCursorPosition = function(e) {
     var x, y;
@@ -68,17 +70,16 @@ var clearCanvas = function() {
     canvas.width = canvas.width;
 };
 
+var drawBoxAtMouse = function() {
+    var canvas = document.getElementById('main');
+    var context = canvas.getContext('2d');
+    context.fillRect(MOUSE_X, MOUSE_Y, BOX_SIZE, BOX_SIZE);
+};
+
 var drawGame = function() {
     clearCanvas();
     drawBase();
-    //drawEverythingElse();
-};
-
-var drawBox = function(event) {
-    var position = getCursorPosition(event);
-    var canvas = event.target;
-    var context = canvas.getContext('2d');
-    context.fillRect(position[0], position[1], BOX_SIZE, BOX_SIZE);
+    drawBoxAtMouse();
 };
 
 var gameLoop = function() {
@@ -108,6 +109,10 @@ var startLoop = function() {
 (function(document) {
     document.getElementById('stop').addEventListener('click', stopLoop);
     document.getElementById('start').addEventListener('click', startLoop);
-    document.getElementById('main').addEventListener('mousemove', drawBox);
+    document.getElementById('main').addEventListener('mousemove', function(e) {
+        var pos = getCursorPosition(e);
+        MOUSE_X = pos[0];
+        MOUSE_Y = pos[1];
+    });
     startLoop();
 })(document);
