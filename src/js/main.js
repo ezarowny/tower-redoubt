@@ -63,7 +63,13 @@ var drawBase = function() {
     drawGrid(canvas);
 };
 
+var clearCanvas = function() {
+    var canvas = document.getElementById('main');
+    canvas.width = canvas.width;
+};
+
 var drawGame = function() {
+    clearCanvas();
     drawBase();
     //drawEverythingElse();
 };
