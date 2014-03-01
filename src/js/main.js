@@ -30,6 +30,20 @@ var drawBoundary = function(canvas) {
     context.stroke();
 };
 
+var drawGrid = function(canvas) {
+    var context = canvas.getContext('2d');
+    for (var x = ARENA_LEFT + 0.5; x < ARENA_WIDTH; x += BOX_SIZE) {
+        context.moveTo(x, ARENA_TOP);
+        context.lineTo(x, ARENA_HEIGHT);
+    }
+    for (var y = ARENA_TOP + 0.5; y < ARENA_HEIGHT; y += BOX_SIZE) {
+        context.moveTo(ARENA_LEFT, y);
+        context.lineTo(ARENA_WIDTH, y);
+    }
+    context.strokeStyle = "#eee";
+    context.stroke();
+};
+
 var onClick = function(event) {
     var position = getCursorPosition(event);
     var canvas = event.target;
@@ -42,4 +56,5 @@ var onClick = function(event) {
     var canvas = document.getElementById('main');
     canvas.addEventListener('click', onClick, false);
     drawBoundary(canvas);
+    drawGrid(canvas);
 })(document);
