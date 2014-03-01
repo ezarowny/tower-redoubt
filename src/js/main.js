@@ -68,6 +68,13 @@ var drawGame = function() {
     //drawEverythingElse();
 };
 
+var drawBox = function(event) {
+    var position = getCursorPosition(event);
+    var canvas = event.target;
+    var context = canvas.getContext('2d');
+    context.fillRect(position[0], position[1], BOX_SIZE, BOX_SIZE);
+};
+
 var gameLoop = function() {
     //updateState();
     drawGame();
@@ -95,5 +102,6 @@ var startLoop = function() {
 (function(document) {
     document.getElementById('stop').addEventListener('click', stopLoop);
     document.getElementById('start').addEventListener('click', startLoop);
+    document.getElementById('main').addEventListener('mousemove', drawBox);
     startLoop();
 })(document);
