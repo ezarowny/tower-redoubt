@@ -9,7 +9,13 @@ var BOX_SIZE = 30,
     KEEP_RUNNING = false,
     MOUSE_X = null,
     MOUSE_Y = null,
-    TOWERS = {};
+    TOWERS = [];
+
+var Tower = function(options) {
+    options = options || {};
+    this.x = typeof options.x === 'undefined' ? 0 : options.x;
+    this.y = typeof options.y === 'undefined' ? 0 : options.y;
+};
 
 var getCanvas = function() {
     return document.getElementById('main');
@@ -59,6 +65,16 @@ var drawGrid = function(canvas) {
     context.stroke();
 };
 
+var squareIsFree = function(x, y) {
+    for (var i = 0; i < TOWERS.length; ++i) {
+        var tower = TOWERS[i];
+        if (x === tower.x && y === tower.y) {
+            return false;
+        }
+    }
+    return true;
+};
+
 var onClick = function(event) {
     var position = getCursorPosition(event);
     var canvas = event.target;
@@ -67,8 +83,10 @@ var onClick = function(event) {
 
     // FIXME: This is problematic. Replace with real tower objects
     // someday.
-    var tower = getGridLocation(position[0], position[1]);
-    TOWERS[tower] = tower;
+    var towerPos = getGridLocation(position[0], position[1]);
+    if (squareIsFree(towerPos[0], towerPos[1])) {
+        TOWERS.push(new Tower({x: towerPos[0], y: towerPos[1]}));
+    }
 };
 
 var onMousemove = function(e) {
@@ -117,9 +135,9 @@ var getGridLocation = function(x, y) {
 
 var drawTowers = function(towers) {
     var context = getContext();
-    for (towerStr in towers) {
-        tower = towers[towerStr];
-        context.fillRect(tower[0], tower[1], BOX_SIZE, BOX_SIZE);
+    for (var i = 0; i < towers.length; i++) {
+        tower = towers[i];
+        context.fillRect(tower.x, tower.y, BOX_SIZE, BOX_SIZE);
     }
 };
 
