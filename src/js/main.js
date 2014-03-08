@@ -80,9 +80,6 @@ var onClick = function(event) {
     var canvas = event.target;
     var context = canvas.getContext('2d');
     context.fillRect(position[0], position[1], BOX_SIZE, BOX_SIZE);
-
-    // FIXME: This is problematic. Replace with real tower objects
-    // someday.
     var towerPos = getGridLocation(position[0], position[1]);
     if (squareIsFree(towerPos[0], towerPos[1])) {
         TOWERS.push(new Tower({x: towerPos[0], y: towerPos[1]}));
