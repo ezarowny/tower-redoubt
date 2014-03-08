@@ -25,8 +25,6 @@ var Creep = function(options) {
     this.speedY = 1;
 };
 
-CREEPS.push(new Creep({x: ARENA_LEFT, y: ARENA_TOP}));
-
 var getCanvas = function() {
     return document.getElementById('main');
 };
@@ -199,4 +197,10 @@ var startLoop = function() {
     document.getElementById('start').addEventListener('click', startLoop);
     document.getElementById('main').addEventListener('mousemove', onMousemove);
     startLoop();
+
+    for (var i = 0; i < 20; i++) {
+        setTimeout(function(i) {
+            CREEPS.push(new Creep({x: ARENA_LEFT, y: ARENA_TOP + (BOX_SIZE * i)}));
+        }, 1000*i, i);
+    }
 })(document);
