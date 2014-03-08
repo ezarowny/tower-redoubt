@@ -9,13 +9,23 @@ var BOX_SIZE = 30,
     KEEP_RUNNING = false,
     MOUSE_X = null,
     MOUSE_Y = null,
-    TOWERS = [];
+    TOWERS = [],
+    CREEPS = [];
 
 var Tower = function(options) {
     options = options || {};
     this.x = typeof options.x === 'undefined' ? 0 : options.x;
     this.y = typeof options.y === 'undefined' ? 0 : options.y;
 };
+
+var Creep = function(options) {
+    this.x = options.x;
+    this.y = options.y;
+    this.speedX = 1;
+    this.speedY = 1;
+};
+
+CREEPS.push(new Creep({x: ARENA_LEFT, y: ARENA_TOP}));
 
 var getCanvas = function() {
     return document.getElementById('main');
@@ -133,8 +143,16 @@ var getGridLocation = function(x, y) {
 var drawTowers = function(towers) {
     var context = getContext();
     for (var i = 0; i < towers.length; i++) {
-        tower = towers[i];
+        var tower = towers[i];
         context.fillRect(tower.x, tower.y, BOX_SIZE, BOX_SIZE);
+    }
+};
+
+var drawCreeps = function(creeps) {
+    var context = getContext();
+    for (var i = 0; i < creeps.length; ++i) {
+        var creep = creeps[i];
+        context.fillRect(creep.x, creep.y, BOX_SIZE, BOX_SIZE);
     }
 };
 
@@ -142,11 +160,19 @@ var drawGame = function() {
     clearCanvas();
     drawBase();
     drawTowers(TOWERS);
+    drawCreeps(CREEPS);
     drawBoxAtMouse();
 };
 
+var updateState = function() {
+    for (var i = 0; i < CREEPS.length; ++i) {
+        var creep = CREEPS[i];
+        creep.x = creep.x + creep.speedX;
+    }
+};
+
 var gameLoop = function() {
-    //updateState();
+    updateState();
     drawGame();
 };
 
